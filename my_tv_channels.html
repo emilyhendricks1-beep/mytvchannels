@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My TV Channels</title>
+<style>
+  :root { color-scheme: dark; --bg:#090d16; --panel:#121a2a; --panel2:#19243a; --line:#283650; --muted:#9eacc2; --accent:#63a5ff; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:radial-gradient(ellipse at top,#182744 0,#090d16 55%); color:#f4f7fc; min-height:100vh; }
+  .wrap { max-width:1200px; margin:auto; padding:28px 20px 48px; }
+  header { display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
+  h1 { margin:0; font-size:clamp(1.8rem,4vw,2.7rem); letter-spacing:-.04em; }
+  .sub { color:var(--muted); margin-top:6px; }
+  .clocks { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin:22px 0 30px; }
+  .clock { background:linear-gradient(145deg,#18243a,#101827); border:1px solid var(--line); border-radius:18px; padding:20px 16px; min-width:0; box-shadow:0 12px 30px #0003; }
+  .city { color:#c3d4ee; font-size:.9rem; font-weight:650; letter-spacing:.06em; text-transform:uppercase; }
+  .time { font-variant-numeric:tabular-nums; font-size:clamp(1.8rem,3.5vw,2.8rem); line-height:1.25; font-weight:750; letter-spacing:-.045em; margin:8px 0 3px; white-space:nowrap; }
+  .date { color:var(--muted); font-size:.88rem; }
+  .section-title { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 14px; }
+  h2 { margin:0; font-size:1.35rem; }
+  .count { color:var(--muted); font-size:.9rem; }
+  .channels { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:10px; margin-bottom:18px; }
+  button { border:1px solid var(--line); background:var(--panel); color:#edf4ff; border-radius:12px; padding:14px 16px; font:inherit; font-weight:650; cursor:pointer; text-align:left; transition:.15s ease; }
+  button:hover { border-color:var(--accent); background:var(--panel2); transform:translateY(-1px); }
+  button[aria-pressed="true"] { background:#1b3d68; border-color:var(--accent); box-shadow:inset 0 0 0 1px #63a5ff55; }
+  .player-card { border:1px solid var(--line); background:#0d1421; border-radius:18px; overflow:hidden; }
+  .player-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--line); }
+  .player-head strong { font-size:1.05rem; }
+  .player-head a { color:#9dc7ff; text-decoration:none; font-size:.9rem; }
+  .player-head a:hover { text-decoration:underline; }
+  .player { width:100%; aspect-ratio:16/9; min-height:260px; border:0; display:block; background:#000; }
+  .note { color:var(--muted); font-size:.85rem; line-height:1.5; margin:12px 2px 0; }
+  @media (max-width:850px) { .clocks { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:430px) { .wrap { padding:20px 13px 36px; } .clock { padding:15px 12px; } .time { font-size:1.75rem; } .channels { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div>
+      <h1>📺 My TV Channels</h1>
+      <div class="sub">Your channels and world clocks in one place</div>
+    </div>
+  </header>
+
+  <section aria-label="World clocks">
+    <div class="section-title"><h2>World clocks</h2><span class="count">Live local times</span></div>
+    <div class="clocks">
+      <article class="clock"><div class="city">South Africa</div><div class="time" id="time-za">--:--:--</div><div class="date" id="date-za">Africa/Johannesburg</div></article>
+      <article class="clock"><div class="city">London</div><div class="time" id="time-london">--:--:--</div><div class="date" id="date-london">Europe/London</div></article>
+      <article class="clock"><div class="city">New York</div><div class="time" id="time-ny">--:--:--</div><div class="date" id="date-ny">America/New_York</div></article>
+      <article class="clock"><div class="city">Los Angeles</div><div class="time" id="time-la">--:--:--</div><div class="date" id="date-la">America/Los_Angeles</div></article>
+    </div>
+  </section>
+
+  <section aria-label="TV channels">
+    <div class="section-title"><h2>Channels</h2><span class="count">9 channels</span></div>
+    <div class="channels" id="channels">
+      <button type="button" data-name="CNN" data-src="https://thedaddy.li/stream/stream-345.php" aria-pressed="true">CNN</button>
+      <button type="button" data-name="Tennis" data-src="https://thedaddy.li/stream/stream-40.php" aria-pressed="false">Tennis</button>
+      <button type="button" data-name="BBC News" data-src="https://thedaddy.li/stream/stream-349.php" aria-pressed="false">BBC News</button>
+      <button type="button" data-name="Discovery" data-src="https://thedaddy.li/stream/stream-313.php" aria-pressed="false">Discovery</button>
+      <button type="button" data-name="History" data-src="https://thedaddy.li/stream/stream-322.php" aria-pressed="false">History</button>
+      <button type="button" data-name="Sky Tennis" data-src="https://thedaddy.li/stream/stream-46.php" aria-pressed="false">Sky Tennis</button>
+      <button type="button" data-name="SS Rugby" data-src="https://thedaddy.li/stream/stream-421.php" aria-pressed="false">SS Rugby</button>
+      <button type="button" data-name="SS Cricket" data-src="https://thedaddy.li/stream/stream-368.php" aria-pressed="false">SS Cricket</button>
+      <button type="button" data-name="Sky Cricket" data-src="https://thedaddy.li/stream/stream-65.php" aria-pressed="false">Sky Cricket</button>
+    </div>
+    <div class="player-card">
+      <div class="player-head"><strong id="now-playing">CNN</strong><a id="open-link" href="https://thedaddy.li/stream/stream-345.php" target="_blank" rel="noopener noreferrer">Open stream in new tab ↗</a></div>
+      <iframe class="player" id="player" src="https://thedaddy.li/stream/stream-345.php" title="CNN stream" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
+    <p class="note">Choose a channel button to load it in the player. Some stream providers block embedding on external websites; if a channel does not appear, use “Open stream in new tab”. Only use streams you are authorized to access.</p>
+  </section>
+</main>
+<script>
+const clocks = [
+  {time:"time-za", date:"date-za", zone:"Africa/Johannesburg"},
+  {time:"time-london", date:"date-london", zone:"Europe/London"},
+  {time:"time-ny", date:"date-ny", zone:"America/New_York"},
+  {time:"time-la", date:"date-la", zone:"America/Los_Angeles"}
+];
+function updateClocks() {
+  const now = new Date();
+  for (const c of clocks) {
+    document.getElementById(c.time).textContent = new Intl.DateTimeFormat("en-GB", {
+      timeZone:c.zone, hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false
+    }).format(now);
+    document.getElementById(c.date).textContent = new Intl.DateTimeFormat("en-GB", {
+      timeZone:c.zone, weekday:"short", day:"2-digit", month:"short", year:"numeric"
+    }).format(now);
+  }
+}
+updateClocks();
+setInterval(updateClocks, 1000);
+
+document.querySelectorAll("#channels button").forEach(button => {
+  button.addEventListener("click", () => {
+    const src = button.dataset.src;
+    const name = button.dataset.name;
+    document.querySelectorAll("#channels button").forEach(b => b.setAttribute("aria-pressed", String(b === button)));
+    document.getElementById("now-playing").textContent = name;
+    document.getElementById("open-link").href = src;
+    const player = document.getElementById("player");
+    player.title = name + " stream";
+    player.src = src;
+  });
+});
+</script>
+</body>
+</html>
